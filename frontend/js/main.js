@@ -32,7 +32,7 @@ document.addEventListener('DOMContentLoaded', () => {
         };
 
         try {
-            // --- THIS LINE IS UPDATED ---
+            // UPDATED URL
             const response = await fetch('https://rescue-coordination-app.onrender.com/api/issues', {
                 method: 'POST',
                 headers: {
