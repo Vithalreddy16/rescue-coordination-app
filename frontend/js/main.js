@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const formMessage = document.getElementById('form-message');
     
     // Define the backend API URL
-    const API_URL = 'http://localhost:5000/api/issues';
+    const API_URL = 'https://rescue-coordination-app.onrender.com';
 
     // --- Event Listener for the "Use My GPS" button ---
     getLocationBtn.addEventListener('click', () => {
