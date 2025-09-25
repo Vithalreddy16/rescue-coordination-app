@@ -44,7 +44,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    const API_BASE_URL = 'http://localhost:5000/api/auth';
+    const API_BASE_URL = 'https://rescue-coordination-app.onrender.com';
 
     // --- Toggle Forms ---
     showRegisterLink.addEventListener('click', (e) => {
