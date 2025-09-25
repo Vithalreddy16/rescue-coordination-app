@@ -1,5 +1,4 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // --- DOM Elements ---
     const loginCard = document.getElementById('login-card');
     const registerCard = document.getElementById('register-card');
     const showRegisterLink = document.getElementById('show-register');
@@ -8,9 +7,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const registerForm = document.getElementById('register-form');
     const loginMessage = document.getElementById('login-message');
     const registerMessage = document.getElementById('register-message');
-    
-    // --- Map and Location Logic ---
     const mapElement = document.getElementById('map');
+
+    // UPDATED URL
+    const API_BASE_URL = 'https://rescue-coordination-app.onrender.com/api/auth';
+
     if (mapElement) {
         const latInput = document.getElementById('latitude');
         const lonInput = document.getElementById('longitude');
@@ -44,21 +45,18 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    const API_BASE_URL = 'https://rescue-coordination-app.onrender.com';
-
-    // --- Toggle Forms ---
     showRegisterLink.addEventListener('click', (e) => {
         e.preventDefault();
         loginCard.style.display = 'none';
         registerCard.style.display = 'block';
     });
+
     showLoginLink.addEventListener('click', (e) => {
         e.preventDefault();
         registerCard.style.display = 'none';
         loginCard.style.display = 'block';
     });
 
-    // --- Login Form Submission ---
     loginForm.addEventListener('submit', async (e) => {
         e.preventDefault();
         const email = document.getElementById('login-email').value;
@@ -78,25 +76,15 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // --- Registration Form Submission ---
     registerForm.addEventListener('submit', async (e) => {
         e.preventDefault();
-
-        // VALIDATION: Ensure location is selected
-        const latitude = document.getElementById('latitude').value;
-        const longitude = document.getElementById('longitude').value;
-        if (!latitude || !longitude) {
-            alert('Please select a location on the map before registering.');
-            return; 
-        }
-
         const formData = {
             name: document.getElementById('register-name').value,
             email: document.getElementById('register-email').value,
             phone: document.getElementById('register-phone').value,
             password: document.getElementById('register-password').value,
-            latitude: latitude,
-            longitude: longitude,
+            latitude: document.getElementById('latitude').value,
+            longitude: document.getElementById('longitude').value,
         };
         try {
             const res = await fetch(`${API_BASE_URL}/register`, {
