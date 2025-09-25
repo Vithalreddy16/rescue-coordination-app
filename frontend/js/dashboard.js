@@ -1,5 +1,4 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // --- START: GLOBAL VARIABLES AND DOM ELEMENTS ---
     const token = localStorage.getItem('token');
     if (!token) {
         window.location.href = 'agency-login.html';
@@ -21,37 +20,27 @@ document.addEventListener('DOMContentLoaded', () => {
     const profileUpdateForm = document.getElementById('profile-update-form');
     const profileUpdateMessage = document.getElementById('profile-update-message');
 
-    const API_BASE_URL = 'http://localhost:5000/api';
+    // UPDATED URLs
+    const RENDER_URL = 'https://rescue-coordination-app.onrender.com';
+    const API_BASE_URL = `${RENDER_URL}/api`;
     const headers = { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' };
-    let profileMap = null; // Variable to hold the profile map instance
-    // --- END: GLOBAL VARIABLES AND DOM ELEMENTS ---
+    let profileMap = null;
 
-
-    // --- WebSocket Connection ---
-    const socket = io('http://localhost:5000', { auth: { token } });
+    // WebSocket Connection (UPDATED URL)
+    const socket = io(RENDER_URL, { auth: { token } });
     socket.on('connect', () => console.log('Connected to WebSocket server!', socket.id));
     socket.on('newIssueAlert', (issue) => {
         alert('🔔 New Emergency Alert Received!');
         addAlertToList(issue, true);
     });
-    // In dashboard.js, add this inside the WebSocket section
-
-socket.on('issueAcceptedUpdate', (data) => {
-    console.log(`Received update: Issue ${data.issueId} has been accepted by another agency.`);
-    const acceptedElement = document.getElementById(`issue-${data.issueId}`);
+    socket.on('issueAcceptedUpdate', (data) => {
+        const acceptedElement = document.getElementById(`issue-${data.issueId}`);
+        if (acceptedElement) {
+            acceptedElement.remove();
+            alertsCountEl.textContent = Math.max(0, parseInt(alertsCountEl.textContent) - 1);
+        }
+    });
     
-    // If this alert exists on our screen, remove it
-    if (acceptedElement) {
-        acceptedElement.remove();
-        // Decrement the alert count
-        alertsCountEl.textContent = parseInt(alertsCountEl.textContent) - 1;
-        console.log(`Removed issue ${data.issueId} from our dashboard.`);
-    }
-});
-    // --- End WebSocket ---
-
-
-    // --- FUNCTION DEFINITIONS ---
     const loadDashboardData = async () => {
         try {
             const [profileRes, alertsRes, collabRes, myIssuesRes] = await Promise.all([
@@ -91,25 +80,19 @@ socket.on('issueAcceptedUpdate', (data) => {
         
         const latInput = document.getElementById('profile-latitude');
         const lonInput = document.getElementById('profile-longitude');
-
         const [lon, lat] = profile.location.coordinates;
         latInput.value = lat;
         lonInput.value = lon;
 
         if (!profileMap) {
             profileMap = L.map('profile-map').setView([lat, lon], 13);
-            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-            }).addTo(profileMap);
-            
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(profileMap);
             let marker = L.marker([lat, lon]).addTo(profileMap);
-
             profileMap.on('click', (e) => {
                 const { lat, lng } = e.latlng;
                 latInput.value = lat.toFixed(6);
                 lonInput.value = lng.toFixed(6);
                 marker.setLatLng([lat, lng]);
-                profileMap.panTo([lat, lng]);
             });
         }
     };
@@ -127,26 +110,21 @@ socket.on('issueAcceptedUpdate', (data) => {
     const addAlertToList = (alert, isRealtime = true) => {
         const noAlertsMsg = alertsListEl.querySelector('p');
         if (noAlertsMsg) noAlertsMsg.remove();
-
         const el = document.createElement('div');
         el.className = `list-group-item ${isRealtime ? 'list-group-item-warning' : ''}`;
         el.id = `issue-${alert._id}`;
-        // In dashboard.js, update the el.innerHTML inside addAlertToList
-
-el.innerHTML = `
-    <div class="d-flex w-100 justify-content-between">
-        <h5 class="mb-1">${isRealtime ? '⚡ REAL-TIME ALERT ⚡' : 'New Emergency Report'}</h5>
-        <small>${new Date(alert.createdAt).toLocaleString()}</small>
-    </div>
-    <p class="mb-1"><strong>Description:</strong> ${alert.description}</p>
-    <p class="mb-1"><strong>Contact:</strong> ${alert.userName} (${alert.userPhone})</p>
-    <div class="mt-2">
-        <button class="btn btn-success btn-sm" onclick="acceptIssue('${alert._id}')">Accept</button>
-        <!-- ADD THIS REJECT BUTTON -->
-        <button class="btn btn-secondary btn-sm" onclick="rejectIssue('${alert._id}')">Reject</button>
-    </div>
-`;
-        
+        el.innerHTML = `
+            <div class="d-flex w-100 justify-content-between">
+                <h5 class="mb-1">${isRealtime ? '⚡ REAL-TIME ALERT ⚡' : 'New Emergency Report'}</h5>
+                <small>${new Date(alert.createdAt).toLocaleString()}</small>
+            </div>
+            <p class="mb-1"><strong>Description:</strong> ${alert.description}</p>
+            <p class="mb-1"><strong>Contact:</strong> ${alert.userName} (${alert.userPhone})</p>
+            <div class="mt-2">
+                <button class="btn btn-success btn-sm" onclick="acceptIssue('${alert._id}')">Accept</button>
+                <button class="btn btn-secondary btn-sm" onclick="rejectIssue('${alert._id}')">Reject</button>
+            </div>
+        `;
         if (isRealtime) {
             alertsListEl.prepend(el);
             alertsCountEl.textContent = parseInt(alertsCountEl.textContent) + 1;
@@ -159,8 +137,7 @@ el.innerHTML = `
         collabRequestsListEl.innerHTML = '';
         collabCountEl.textContent = requests.length;
         if (requests.length === 0) {
-            collabRequestsListEl.innerHTML = '<p class="text-muted">No incoming requests.</p>';
-            return;
+            collabRequestsListEl.innerHTML = '<p class="text-muted">No incoming requests.</p>'; return;
         }
         requests.forEach(req => {
             const el = document.createElement('div');
@@ -175,8 +152,7 @@ el.innerHTML = `
     const renderMyAcceptedIssues = (issues) => {
         myAcceptedIssuesListEl.innerHTML = '';
         if (issues.length === 0) {
-            myAcceptedIssuesListEl.innerHTML = '<p class="text-muted">You have not accepted any issues yet.</p>';
-            return;
+            myAcceptedIssuesListEl.innerHTML = '<p class="text-muted">You have not accepted any issues yet.</p>'; return;
         }
         issues.forEach(issue => {
             const el = document.createElement('a');
@@ -187,12 +163,7 @@ el.innerHTML = `
         });
     };
 
-    // --- EVENT LISTENERS and GLOBAL FUNCTIONS ---
-
-    logoutBtn.addEventListener('click', () => {
-        localStorage.removeItem('token');
-        window.location.href = 'agency-login.html';
-    });
+    logoutBtn.addEventListener('click', () => { localStorage.removeItem('token'); window.location.href = 'agency-login.html'; });
 
     profileUpdateForm.addEventListener('submit', async (e) => {
         e.preventDefault();
@@ -217,17 +188,27 @@ el.innerHTML = `
     });
 
     window.acceptIssue = async (issueId) => {
-        if (!confirm('Are you sure you want to accept this issue? The user will be notified.')) return;
+        if (!confirm('Are you sure you want to accept this issue?')) return;
         try {
             const res = await fetch(`${API_BASE_URL}/agencies/issues/${issueId}/accept`, { method: 'POST', headers });
             const data = await res.json();
-            if (!res.ok) throw new Error(data.msg || 'Failed to accept the issue.');
-            
+            if (!res.ok) throw new Error(data.msg);
             alert('Success! Issue accepted.');
             loadDashboardData();
         } catch (error) {
-            console.error('Error in acceptIssue function:', error);
             alert(`An error occurred: ${error.message}`);
+        }
+    };
+    
+    window.rejectIssue = async (issueId) => {
+        try {
+            const res = await fetch(`${API_BASE_URL}/agencies/issues/${issueId}/reject`, { method: 'POST', headers });
+            if (!res.ok) throw new Error('Failed to reject issue.');
+            const rejectedElement = document.getElementById(`issue-${issueId}`);
+            if (rejectedElement) rejectedElement.remove();
+            alertsCountEl.textContent = Math.max(0, parseInt(alertsCountEl.textContent) - 1);
+        } catch (error) {
+            alert('Could not dismiss the alert.');
         }
     };
 
@@ -256,29 +237,5 @@ el.innerHTML = `
         loadDashboardData();
     };
 
-    // --- INITIAL LOAD ---
     loadDashboardData();
-    // Add this new function to dashboard.js
-
-    window.rejectIssue = async (issueId) => {
-    try {
-        const res = await fetch(`${API_BASE_URL}/agencies/issues/${issueId}/reject`, {
-            method: 'POST',
-            headers: headers
-        });
-        if (!res.ok) throw new Error('Failed to reject issue.');
-
-        // For instant feedback, remove the element from the UI
-        const rejectedElement = document.getElementById(`issue-${issueId}`);
-        if (rejectedElement) {
-            rejectedElement.remove();
-        }
-        // Decrement the alert count
-        alertsCountEl.textContent = parseInt(alertsCountEl.textContent) - 1;
-
-    } catch (error) {
-        console.error('Error rejecting issue:', error);
-        alert('Could not dismiss the alert.');
-    }
-   };
 });
