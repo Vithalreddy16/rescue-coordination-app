@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agency Dashboard</title>
+    <!-- CSS Libraries -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <!-- JS Libraries (in head for proper loading order) -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
+</head>
+<body class="bg-light">
+    <!-- Top Navigation Bar -->
+    <nav class="navbar navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">Rescue Coordination Dashboard</a>
+            <button class="btn btn-outline-light" id="logout-btn">Logout</button>
+        </div>
+    </nav>
+
+    <!-- Main Content Container -->
+    <div class="container mt-4">
+        <!-- Welcome Header -->
+        <div class="p-4 mb-4 bg-white rounded-3 shadow-sm">
+            <h2 class="display-6">Welcome, <span id="agency-name" class="text-primary">Loading...</span>!</h2>
+            <p class="lead" id="agency-email">Loading your details...</p>
+        </div>
+        
+        <!-- Tab Navigation -->
+        <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="alerts-tab" data-bs-toggle="tab" data-bs-target="#alerts-panel" type="button" role="tab">
+                    New Alerts <span class="badge bg-danger" id="alerts-count">0</span>
+                </button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="collab-tab" data-bs-toggle="tab" data-bs-target="#collab-panel" type="button" role="tab">
+                    Collaboration <span class="badge bg-info" id="collab-count">0</span>
+                </button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile-panel" type="button" role="tab">
+                    My Profile
+                </button>
+            </li>
+        </ul>
+        
+        <!-- Tab Content Panels -->
+        <div class="tab-content" id="myTabContent">
+
+            <!-- Alerts Panel -->
+            <div class="tab-pane fade show active" id="alerts-panel" role="tabpanel">
+                <div class="card card-body">
+                    <div id="alerts-list" class="list-group">
+                        <!-- JavaScript will populate this -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Collaboration Panel -->
+            <div class="tab-pane fade" id="collab-panel" role="tabpanel">
+                <div class="card card-body">
+                    <h5>Incoming Collaboration Requests</h5>
+                    <div id="collab-requests-list" class="list-group mb-4">
+                        <!-- JavaScript will populate this -->
+                    </div>
+                    <hr>
+                    <h5>My Accepted Issues</h5>
+                    <p class="text-muted">Select an issue to request collaboration from another agency.</p>
+                    <div id="my-accepted-issues-list" class="list-group">
+                        <!-- JavaScript will populate this -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Profile Panel -->
+            <div class="tab-pane fade" id="profile-panel" role="tabpanel">
+                <div class="card card-body">
+                    <h3>Update Your Profile</h3>
+                    <p class="text-muted">Changes are saved immediately upon submission.</p>
+                    <form id="profile-update-form">
+                        <div class="mb-3">
+                            <label for="profile-name" class="form-label">Agency Name</label>
+                            <input type="text" class="form-control" id="profile-name">
+                        </div>
+                        <div class="mb-3">
+                            <label for="profile-phone" class="form-label">Contact Phone</label>
+                            <input type="tel" class="form-control" id="profile-phone">
+                        </div>
+                        <div class="mb-3">
+                            <label for="profile-expertise" class="form-label">Areas of Expertise</label>
+                            <input type="text" class="form-control" id="profile-expertise" placeholder="e.g., First Aid, Search & Rescue">
+                            <div class="form-text">Enter skills separated by commas.</div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="profile-region" class="form-label">Service Region</label>
+                            <input type="text" class="form-control" id="profile-region" placeholder="e.g., Downtown Metro Area">
+                        </div>
+                        <hr>
+                        <h5>Update Location</h5>
+                        <div id="profile-map" style="height: 250px; width: 100%; margin-bottom: 15px; border-radius: 5px; overflow: hidden;"></div>
+                        <div class="input-group mb-3">
+                            <input type="text" class="form-control" id="profile-latitude" placeholder="Latitude" readonly>
+                            <input type="text" class="form-control" id="profile-longitude" placeholder="Longitude" readonly>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Save Profile Changes</button>
+                    </form>
+                    <div id="profile-update-message" class="mt-3"></div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Collaboration Request Modal -->
+    <div class="modal fade" id="collabModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Request Collaboration</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="collab-form">
+                        <input type="hidden" id="collab-issue-id">
+                        <div class="mb-3">
+                            <label for="agency-select" class="form-label">Select Agency</label>
+                            <select class="form-select" id="agency-select" required></select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="collab-message" class="form-label">Message</label>
+                            <textarea class="form-control" id="collab-message" rows="3" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Send Request</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main JavaScript files for functionality -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/dashboard.js"></script>
+
+</body>
+</html>
