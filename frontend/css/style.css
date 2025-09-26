@@ -33,10 +33,7 @@ a:hover {
     color: #6a1a22;
 }
 
-
 /* 3. Urgent Animations and Effects */
-
-/* Flashing Alert Badge on Dashboard */
 @keyframes pulse-red {
     0% {
         transform: scale(0.95);
@@ -61,10 +58,7 @@ a:hover {
     animation: none !important;
 }
 
-/* --- EDITED CHATBOT STYLES --- */
-
-/* --- EDITED CHATBOT STYLES --- */
-
+/* 4. Chatbot Styles */
 .chatbot-icon-container {
     position: fixed;
     bottom: 20px;
@@ -77,14 +71,16 @@ a:hover {
     display: flex;
     justify-content: center;
     align-items: center;
-    /* font-size property is removed as it's for text icons */
     cursor: pointer;
     z-index: 1000;
     box-shadow: 0 4px 8px rgba(0,0,0,0.2);
     transition: transform 0.2s ease-in-out;
 }
 
-/* This new rule styles the image inside the circle */
+.chatbot-icon-container:hover {
+    transform: scale(1.1);
+}
+
 .chatbot-icon-container img {
     width: 36px;
     height: 36px;
@@ -179,14 +175,17 @@ a:hover {
     cursor: pointer;
     flex-shrink: 0;
 }
+
 /* 5. Dashboard Specific Theming */
 .list-group-item-warning {
     border-left: 5px solid var(--bs-warning) !important;
 }
+
 .btn-info {
     background-color: #5bc0de;
     border-color: #46b8da;
 }
+
 .btn-info:hover {
     background-color: #31b0d5;
     border-color: #269abc;
