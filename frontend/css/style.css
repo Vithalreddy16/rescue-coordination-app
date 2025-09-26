@@ -14,7 +14,7 @@ body {
 /* 1. New Dark Gradient Background */
 .bg-dark-gradient {
     background-color: #88948A;
-    background-image: radial-gradient(circle at top, #B53565 0%, #88948A 80%);
+    background-image: radial-gradient(circle at top, #FFE53B 0%, #FF005B 80%);
     color: #f8f9fa;
 }
 
