@@ -63,11 +63,13 @@ a:hover {
 
 /* --- EDITED CHATBOT STYLES --- */
 
+/* --- EDITED CHATBOT STYLES --- */
+
 .chatbot-icon-container {
     position: fixed;
     bottom: 20px;
     right: 20px;
-    background-color: #dc3545; /* Changed to red */
+    background-color: #dc3545;
     color: white;
     width: 60px;
     height: 60px;
@@ -75,15 +77,17 @@ a:hover {
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 32px; /* Changed for new icon */
+    /* font-size property is removed as it's for text icons */
     cursor: pointer;
     z-index: 1000;
     box-shadow: 0 4px 8px rgba(0,0,0,0.2);
     transition: transform 0.2s ease-in-out;
 }
 
-.chatbot-icon-container:hover {
-    transform: scale(1.1);
+/* This new rule styles the image inside the circle */
+.chatbot-icon-container img {
+    width: 36px;
+    height: 36px;
 }
 
 .chat-window-container {
@@ -103,7 +107,7 @@ a:hover {
 }
 
 .chat-header {
-    background-color: #dc3545; /* Changed to red */
+    background-color: #dc3545;
     color: white;
     padding: 15px;
     display: flex;
@@ -139,7 +143,7 @@ a:hover {
 }
 
 .user-message {
-    background-color: #dc3545; /* Changed to red */
+    background-color: #dc3545;
     color: white;
     align-self: flex-end;
     border-bottom-right-radius: 5px;
@@ -167,7 +171,7 @@ a:hover {
 
 #chat-form button {
     border: none;
-    background-color: #dc3545; /* Changed to red */
+    background-color: #dc3545;
     color: white;
     border-radius: 50%;
     width: 35px;
