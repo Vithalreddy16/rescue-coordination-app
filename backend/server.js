@@ -26,6 +26,7 @@ app.use((req, res, next) => {
     next();
 });
 
+app.use('/api/chat', require('./routes/chat'));
 io.on('connection', (socket) => {
     console.log('A user connected via WebSocket:', socket.id);
     const token = socket.handshake.auth.token;
