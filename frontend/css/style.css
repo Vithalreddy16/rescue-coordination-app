@@ -1,5 +1,91 @@
-/* You can add custom styles here if you like */
-body {
+/* --- RESCUE THEME OVERHAUL --- */
+
+/* 1. Subtle, Urgent Background Pattern */
+.bg-rescue-pattern {
     background-color: #f8f9fa;
+    background-image: 
+        linear-gradient(135deg, #e9ecef 25%, transparent 25%),
+        linear-gradient(225deg, #e9ecef 25%, transparent 25%),
+        linear-gradient(45deg, #e9ecef 25%, transparent 25%),
+        linear-gradient(315deg, #e9ecef 25%, #f8f9fa 25%);
+    background-size: 40px 40px;
+    background-position: 0 0, 20px 0, 20px -20px, 0px 20px;
 }
-.chatbot-icon-container{position:fixed;bottom:20px;right:20px;background-color:#0d6efd;color:white;width:60px;height:60px;border-radius:50%;display:flex;justify-content:center;align-items:center;font-size:28px;cursor:pointer;z-index:1000;box-shadow:0 4px 8px rgba(0,0,0,0.2);transition:transform .2s ease-in-out}.chatbot-icon-container:hover{transform:scale(1.1)}.chat-window-container{position:fixed;bottom:90px;right:20px;width:350px;max-width:90%;height:500px;background-color:white;border-radius:15px;box-shadow:0 5px 15px rgba(0,0,0,0.3);z-index:1000;display:none;flex-direction:column;overflow:hidden}.chat-header{background-color:#0d6efd;color:white;padding:15px;display:flex;justify-content:space-between;align-items:center}.chat-header h5{margin:0}.chat-messages{flex-grow:1;padding:15px;overflow-y:auto;display:flex;flex-direction:column;gap:12px}.message{padding:10px 15px;border-radius:20px;max-width:80%;line-height:1.4}.bot-message{background-color:#e9ecef;color:#212529;align-self:flex-start;border-bottom-left-radius:5px}.user-message{background-color:#0d6efd;color:white;align-self:flex-end;border-bottom-right-radius:5px}.chat-input-area{padding:10px;border-top:1px solid #dee2e6}#chat-form{display:flex;border:1px solid #ccc;border-radius:20px;padding:5px}#chat-input{flex-grow:1;border:none;outline:none;padding:5px 10px;background-color:transparent}#chat-form button{border:none;background-color:#0d6efd;color:white;border-radius:50%;width:35px;height:35px;cursor:pointer;flex-shrink:0}
+
+/* 2. Override Bootstrap's Default Colors */
+:root {
+    --bs-primary: #dc3545; /* Change primary blue to danger red */
+    --bs-secondary: #6c757d;
+    --bs-success: #198754;
+    --bs-info: #0dcaf0;
+    --bs-warning: #ffc107;
+    --bs-danger: #dc3545;
+    --bs-light: #f8f9fa;
+    --bs-dark: #212529;
+}
+
+/* Make links use the new primary red color */
+a {
+    color: #bb2d3b;
+}
+
+a:hover {
+    color: #6a1a22;
+}
+
+
+/* 3. Urgent Animations and Effects */
+
+/* Flashing Alert Badge on Dashboard */
+@keyframes pulse-red {
+    0% {
+        transform: scale(0.95);
+        box-shadow: 0 0 0 0 rgba(220, 53, 69, 0.7);
+    }
+    70% {
+        transform: scale(1);
+        box-shadow: 0 0 0 10px rgba(220, 53, 69, 0);
+    }
+    100% {
+        transform: scale(0.95);
+        box-shadow: 0 0 0 0 rgba(220, 53, 69, 0);
+    }
+}
+
+/* Apply the pulse to the alerts badge when it has a count > 0 */
+#alerts-count:not(:empty):not(.badge-0) {
+    animation: pulse-red 2s infinite;
+}
+/* Helper for JS to stop animation if count becomes 0 */
+.badge-0 {
+    animation: none !important;
+}
+
+
+/* 4. Chatbot Theming */
+.chatbot-icon-container {
+    background-color: #dc3545; /* Red icon */
+}
+.chat-header {
+    background-color: #dc3545; /* Red header */
+}
+.user-message {
+    background-color: #dc3545; /* Red user message bubble */
+}
+#chat-form button {
+    background-color: #dc3545; /* Red send button */
+}
+
+
+/* 5. Dashboard Specific Theming */
+.list-group-item-warning {
+    border-left: 5px solid var(--bs-warning) !important;
+}
+.btn-info {
+    background-color: #5bc0de;
+    border-color: #46b8da;
+}
+.btn-info:hover {
+    background-color: #31b0d5;
+    border-color: #269abc;
+}
