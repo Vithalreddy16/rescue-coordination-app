@@ -1,6 +1,7 @@
 /* --- RESCUE THEME OVERHAUL --- */
 
 /* 1. Subtle, Urgent Background Pattern */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
 .bg-rescue-pattern {
     background-color: #f8f9fa;
     background-image: 
