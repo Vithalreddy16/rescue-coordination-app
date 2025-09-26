@@ -62,7 +62,24 @@ a:hover {
 }
 
 
-.chatbot-icon-container{position:fixed;bottom:20px;right:20px;background-color:#dc3545;color:white;width:60px;height:60px;border-radius:50%;display:flex;justify-content:center;align-items:center;font-size:28px;cursor:pointer;z-index:1000;box-shadow:0 4px 8px rgba(0,0,0,0.2);transition:transform .2s ease-in-out}.chatbot-icon-container:hover{transform:scale(1.1)}.chat-window-container{position:fixed;bottom:90px;right:20px;width:350px;max-width:90%;height:500px;background-color:white;border-radius:15px;box-shadow:0 5px 15px rgba(0,0,0,0.3);z-index:1000;display:none;flex-direction:column;overflow:hidden}.chat-header{background-color:#0d6efd;color:white;padding:15px;display:flex;justify-content:space-between;align-items:center}.chat-header h5{margin:0}.chat-messages{flex-grow:1;padding:15px;overflow-y:auto;display:flex;flex-direction:column;gap:12px}.message{padding:10px 15px;border-radius:20px;max-width:80%;line-height:1.4}.bot-message{background-color:#e9ecef;color:#212529;align-self:flex-start;border-bottom-left-radius:5px}.user-message{background-color:#0d6efd;color:white;align-self:flex-end;border-bottom-right-radius:5px}.chat-input-area{padding:10px;border-top:1px solid #dee2e6}#chat-form{display:flex;border:1px solid #ccc;border-radius:20px;padding:5px}#chat-input{flex-grow:1;border:none;outline:none;padding:5px 10px;background-color:transparent}#chat-form button{border:none;background-color:#0d6efd;color:white;border-radius:50%;width:35px;height:35px;cursor:pointer;flex-shrink:0}
+.chatbot-icon-container {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: #dc3545;
+    color: white;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 32px; /* Changed */
+    cursor: pointer;
+    z-index: 1000;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    transition: transform 0.2s ease-in-out;
+}
 
 /* 5. Dashboard Specific Theming */
 .list-group-item-warning {
