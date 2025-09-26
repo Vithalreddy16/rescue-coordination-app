@@ -11,15 +11,10 @@ body {
     min-height: 100vh;
 }
 
-.bg-rescue-pattern {
-    background-color: #f8f9fa;
-    background-image: 
-        linear-gradient(135deg, #e9ecef 25%, transparent 25%),
-        linear-gradient(225deg, #e9ecef 25%, transparent 25%),
-        linear-gradient(45deg, #e9ecef 25%, transparent 25%),
-        linear-gradient(315deg, #e9ecef 25%, #f8f9fa 25%);
-    background-size: 40px 40px;
-    background-position: 0 0, 20px 0, 20px -20px, 0px 20px;
+/* 1. New Topographical Map Background */
+.bg-topo-map {
+    background-color: #f0f2f5; /* A slightly cooler, modern light grey */
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Cg fill-rule='evenodd'%3E%3Cg fill='%23d4dae3' fill-opacity='0.4'%3E%3Cpath opacity='.5' d='M96 95h4v1h-4v-1zm-7 5h2v1h-2v-1zm-3 0h2v1h-2v-1zm-3 0h2v1h-2v-1zm-3 0h2v1h-2v-1zM60 95h2v1h-2v-1zm-3 0h2v1h-2v-1zm-3 0h2v1h-2v-1zm-3 0h2v1h-2v-1zM30 95h2v1h-2v-1zm-3 0h2v1h-2v-1zm-3 0h2v1h-2v-1zm-3 0h2v1h-2v-1zM0 95h2v1H0v-1zm3-5h2v1H3v-1zm3 0h2v1H6v-1zm3 0h2v1H9v-1zm3 0h2v1h-2v-1zM30 90h2v1h-2v-1zm-3 0h2v1h-2v-1zm-3 0h2v1h-2v-1zm-3 0h2v1h-2v-1zM0 90h2v1H0v-1zm3-5h2v1H3v-1zm3 0h2v1H6v-1zm3 0h2v1H9v-1zm3 0h2v1h-2v-1zm-3 5h2v1h-2v-1zm-3 0h2v1h-2v-1zm-3 0h2v1h-2v-1zm-3 0h2v1h-2v-1z'/%3E%3Cpath d='M88 85h2v1h-2v-1zm-3 0h2v1h-2v-1zm-3 0h2v1h-2v-1zm-3 0h2v1h-2v-1zm-3 0h2v1h-2v-1zm-3 0h2v1h-2v-1zm-3 0h2v1h-2v-1zm-3 0h2v1h-2v-1zM32 85h2v1h-2v-1zm-3 0h2v1h-2v-1zm-3 0h2v1h-2v-1zm-3 0h2v1h-2v-1zm-3 0h2v1h-2v-1zm-3 0h2v1h-2v-1zm-3 0h2v1h-2v-1zm-3 0h2v1H2v-1z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
 }
 
 :root {
