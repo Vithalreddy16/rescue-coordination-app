@@ -1,7 +1,16 @@
-/* --- RESCUE THEME OVERHAUL --- */
+/* --- GLOBAL STYLES & RESCUE THEME --- */
 
-/* 1. Subtle, Urgent Background Pattern */
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
+body {
+    font-family: 'Roboto', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
 .bg-rescue-pattern {
     background-color: #f8f9fa;
     background-image: 
@@ -13,7 +22,6 @@
     background-position: 0 0, 20px 0, 20px -20px, 0px 20px;
 }
 
-/* 2. Override Bootstrap's Default Colors */
 :root {
     --bs-primary: #dc3545; /* Change primary blue to danger red */
     --bs-secondary: #6c757d;
@@ -25,7 +33,6 @@
     --bs-dark: #212529;
 }
 
-/* Make links use the new primary red color */
 a {
     color: #bb2d3b;
 }
@@ -34,32 +41,86 @@ a:hover {
     color: #6a1a22;
 }
 
-/* 3. Urgent Animations and Effects */
-@keyframes pulse-red {
-    0% {
-        transform: scale(0.95);
-        box-shadow: 0 0 0 0 rgba(220, 53, 69, 0.7);
-    }
-    70% {
-        transform: scale(1);
-        box-shadow: 0 0 0 10px rgba(220, 53, 69, 0);
-    }
-    100% {
-        transform: scale(0.95);
-        box-shadow: 0 0 0 0 rgba(220, 53, 69, 0);
-    }
+/* --- HEADER & FOOTER STYLES --- */
+header h1, footer p {
+    margin: 0;
+}
+header i {
+    margin-right: 10px;
+}
+.container {
+    flex-grow: 1; /* Pushes footer down */
 }
 
-/* Apply the pulse to the alerts badge when it has a count > 0 */
+/* --- INTERACTIVE & ANIMATED ELEMENTS --- */
+
+.card {
+    border: none;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.15) !important;
+}
+
+@keyframes pulse-red {
+    0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(220, 53, 69, 0.7); }
+    70% { transform: scale(1); box-shadow: 0 0 0 10px rgba(220, 53, 69, 0); }
+    100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(220, 53, 69, 0); }
+}
+
 #alerts-count:not(:empty):not(.badge-0) {
     animation: pulse-red 2s infinite;
 }
-/* Helper for JS to stop animation if count becomes 0 */
 .badge-0 {
     animation: none !important;
 }
 
-/* 4. Chatbot Styles */
+
+/* --- DASHBOARD-SPECIFIC STYLES --- */
+
+.dashboard-nav .list-group-item {
+    border-radius: 0;
+    border-left: 5px solid transparent;
+    transition: all 0.2s ease-in-out;
+    font-weight: 500;
+}
+
+.dashboard-nav .list-group-item.active {
+    background-color: #dc3545;
+    color: white;
+    border-color: #a71d2a;
+}
+
+.dashboard-nav .list-group-item:hover:not(.active) {
+    background-color: #f1f1f1;
+    border-left-color: #ccc;
+    transform: translateX(5px);
+}
+
+.dashboard-nav i.me-2 {
+    width: 20px;
+    text-align: center;
+}
+
+.list-group-item-warning {
+    border-left: 5px solid var(--bs-warning) !important;
+}
+
+.btn-info {
+    background-color: #5bc0de;
+    border-color: #46b8da;
+}
+
+.btn-info:hover {
+    background-color: #31b0d5;
+    border-color: #269abc;
+}
+
+
+/* --- CHATBOT STYLES --- */
+
 .chatbot-icon-container {
     position: fixed;
     bottom: 20px;
@@ -175,19 +236,4 @@ a:hover {
     height: 35px;
     cursor: pointer;
     flex-shrink: 0;
-}
-
-/* 5. Dashboard Specific Theming */
-.list-group-item-warning {
-    border-left: 5px solid var(--bs-warning) !important;
-}
-
-.btn-info {
-    background-color: #5bc0de;
-    border-color: #46b8da;
-}
-
-.btn-info:hover {
-    background-color: #31b0d5;
-    border-color: #269abc;
 }
