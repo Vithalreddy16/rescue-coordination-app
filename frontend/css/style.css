@@ -11,21 +11,16 @@ body {
     min-height: 100vh;
 }
 
-/* 1. New Topographical Map Background */
 /* 1. New Dark Gradient Background */
-/* 1. New Topographical Map Background */
-.bg-topo-map {
-    background-color: #f0f2f5; /* A slightly cooler, modern light grey */
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Cg fill-rule='evenodd'%3E%3Cg fill='%23d4dae3' fill-opacity='0.4'%3E%3Cpath opacity='.5' d='M96 95h4v1h-4v-1zm-7 5h2v1h-2v-1zm-3 0h2v1h-2v-1zm-3 0h2v1h-2v-1zm-3 0h2v1h-2v-1zM60 95h2v1h-2v-1zm-3 0h2v1h-2v-1zm-3 0h2v1h-2v-1zm-3 0h2v1h-2v-1zM30 95h2v1h-2v-1zm-3 0h2v1h-2v-1zm-3 0h2v1h-2v-1zm-3 0h2v1h-2v-1zM0 95h2v1H0v-1zm3-5h2v1H3v-1zm3 0h2v1H6v-1zm3 0h2v1H9v-1zm3 0h2v1h-2v-1zM30 90h2v1h-2v-1zm-3 0h2v1h-2v-1zm-3 0h2v1h-2v-1zm-3 0h2v1h-2v-1zM0 90h2v1H0v-1zm3-5h2v1H3v-1zm3 0h2v1H6v-1zm3 0h2v1H9v-1zm3 0h2v1h-2v-1zm-3 5h2v1h-2v-1zm-3 0h2v1h-2v-1zm-3 0h2v1h-2v-1zm-3 0h2v1h-2v-1z'/%3E%3Cpath d='M88 85h2v1h-2v-1zm-3 0h2v1h-2v-1zm-3 0h2v1h-2v-1zm-3 0h2v1h-2v-1zm-3 0h2v1h-2v-1zm-3 0h2v1h-2v-1zm-3 0h2v1h-2v-1zm-3 0h2v1h-2v-1zM32 85h2v1h-2v-1zm-3 0h2v1h-2v-1zm-3 0h2v1h-2v-1zm-3 0h2v1h-2v-1zm-3 0h2v1h-2v-1zm-3 0h2v1h-2v-1zm-3 0h2v1h-2v-1zm-3 0h2v1H2v-1z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
-}
 .bg-dark-gradient {
-    background-color: #121212; /* Fallback for older browsers */
-    background-image: radial-gradient(circle at top, #1a233a 0%, #121212 80%);
-    color: #f8f9fa; /* Set default text color to light grey for readability */
+    background-color: #88948A;
+    background-image: radial-gradient(circle at top, #B53565 0%, #88948A 80%);
+    color: #f8f9fa;
 }
 
+/* 2. Override Bootstrap's Default Colors */
 :root {
-    --bs-primary: #dc3545; /* Change primary blue to danger red */
+    --bs-primary: #dc3545;
     --bs-secondary: #6c757d;
     --bs-success: #198754;
     --bs-info: #0dcaf0;
@@ -35,10 +30,10 @@ body {
     --bs-dark: #212529;
 }
 
+/* 3. General Link Styling */
 a {
     color: #bb2d3b;
 }
-
 a:hover {
     color: #6a1a22;
 }
@@ -51,16 +46,14 @@ header i {
     margin-right: 10px;
 }
 .container {
-    flex-grow: 1; /* Pushes footer down */
+    flex-grow: 1;
 }
 
 /* --- INTERACTIVE & ANIMATED ELEMENTS --- */
-
 .card {
     border: none;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
-
 .card:hover {
     transform: translateY(-5px);
     box-shadow: 0 8px 25px rgba(0,0,0,0.15) !important;
@@ -79,50 +72,78 @@ header i {
     animation: none !important;
 }
 
+/* --- DARK THEME ADAPTATIONS --- */
+.bg-dark-gradient h1, .bg-dark-gradient h2, .bg-dark-gradient h3, .bg-dark-gradient h5 {
+    color: #ffffff;
+}
+.bg-dark-gradient .card {
+    background-color: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
+.bg-dark-gradient .card .form-label {
+    color: #e9ecef;
+}
+.bg-dark-gradient .card .form-control {
+    background-color: rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: #ffffff;
+}
+.bg-dark-gradient .card .form-control::placeholder {
+    color: #adb5bd;
+}
+.bg-dark-gradient .card .form-control:focus {
+    background-color: rgba(0, 0, 0, 0.3);
+    border-color: #ffc107;
+    box-shadow: 0 0 0 0.25rem rgba(255, 193, 7, 0.25);
+    color: #ffffff;
+}
+.bg-dark-gradient .card p, .bg-dark-gradient .card .form-text {
+    color: #ced4da;
+}
+.bg-dark-gradient .card a {
+    color: #ffc107;
+    font-weight: bold;
+}
+#map {
+    filter: invert(100%) hue-rotate(180deg) brightness(95%) contrast(90%);
+}
 
 /* --- DASHBOARD-SPECIFIC STYLES --- */
-
 .dashboard-nav .list-group-item {
     border-radius: 0;
     border-left: 5px solid transparent;
     transition: all 0.2s ease-in-out;
     font-weight: 500;
 }
-
 .dashboard-nav .list-group-item.active {
     background-color: #dc3545;
     color: white;
     border-color: #a71d2a;
 }
-
 .dashboard-nav .list-group-item:hover:not(.active) {
     background-color: #f1f1f1;
     border-left-color: #ccc;
     transform: translateX(5px);
 }
-
 .dashboard-nav i.me-2 {
     width: 20px;
     text-align: center;
 }
-
 .list-group-item-warning {
     border-left: 5px solid var(--bs-warning) !important;
 }
-
 .btn-info {
     background-color: #5bc0de;
     border-color: #46b8da;
 }
-
 .btn-info:hover {
     background-color: #31b0d5;
     border-color: #269abc;
 }
 
-
 /* --- CHATBOT STYLES --- */
-
 .chatbot-icon-container {
     position: fixed;
     bottom: 20px;
@@ -140,16 +161,13 @@ header i {
     box-shadow: 0 4px 8px rgba(0,0,0,0.2);
     transition: transform 0.2s ease-in-out;
 }
-
 .chatbot-icon-container:hover {
     transform: scale(1.1);
 }
-
 .chatbot-icon-container img {
     width: 36px;
     height: 36px;
 }
-
 .chat-window-container {
     position: fixed;
     bottom: 90px;
@@ -165,7 +183,6 @@ header i {
     flex-direction: column;
     overflow: hidden;
 }
-
 .chat-header {
     background-color: #dc3545;
     color: white;
@@ -174,11 +191,9 @@ header i {
     justify-content: space-between;
     align-items: center;
 }
-
 .chat-header h5 {
     margin: 0;
 }
-
 .chat-messages {
     flex-grow: 1;
     padding: 15px;
@@ -187,40 +202,34 @@ header i {
     flex-direction: column;
     gap: 12px;
 }
-
 .message {
     padding: 10px 15px;
     border-radius: 20px;
     max-width: 80%;
     line-height: 1.4;
 }
-
 .bot-message {
     background-color: #e9ecef;
     color: #212529;
     align-self: flex-start;
     border-bottom-left-radius: 5px;
 }
-
 .user-message {
     background-color: #dc3545;
     color: white;
     align-self: flex-end;
     border-bottom-right-radius: 5px;
 }
-
 .chat-input-area {
     padding: 10px;
     border-top: 1px solid #dee2e6;
 }
-
 #chat-form {
     display: flex;
     border: 1px solid #ccc;
     border-radius: 20px;
     padding: 5px;
 }
-
 #chat-input {
     flex-grow: 1;
     border: none;
@@ -228,7 +237,6 @@ header i {
     padding: 5px 10px;
     background-color: transparent;
 }
-
 #chat-form button {
     border: none;
     background-color: #dc3545;
