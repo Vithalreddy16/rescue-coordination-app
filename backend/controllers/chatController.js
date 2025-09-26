@@ -11,7 +11,7 @@ const getChatbotResponse = (message) => {
     } else if (msg.includes('earthquake')) {
         return "During an earthquake: Drop, Cover, and Hold On. Stay indoors until the shaking stops. Be cautious of aftershocks.";
     } else if (msg.includes('fire')) {
-        return "If you see a fire, evacuate the area immediately. Close doors behind you to contain the fire. Call your local emergency number (like 112 or 108 or 100) once you are in a safe location.";
+        return "If you see a fire, evacuate the area immediately. Close doors behind you to contain the fire. Call your local emergency number (like 101 or 108 or 100) once you are in a safe location.";
     } else if (msg.includes('how') && msg.includes('work')) {
          return "When you submit a report, our system instantly searches for rescue agencies within a 20km radius and sends them a real-time alert to their dashboard.";
     } else if (msg.includes('hello') || msg.includes('hi')) {
