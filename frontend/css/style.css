@@ -13,7 +13,7 @@ body {
 
 /* 1. New Dark Gradient Background */
 .bg-dark-gradient {
-    background-color: #800000;
+    background-color:radial-gradient(circle at center, #ff4d4d 0%, #ff0000 50%, #800000 100%);
     background-image:  radial-gradient(circle at center, #ff4d4d 0%, #ff0000 50%, #800000 100%);
     color: #f8f9fa;
 }
